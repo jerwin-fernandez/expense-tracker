@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ExpenseDate from './ExpenseDate';
 import Card from '../UI/Card';
@@ -8,25 +8,19 @@ import './ExpenseItem.css';
 const ExpenseItem = props => {
   const { date, title, amount } = props.expense;
 
-  console.log('Expense Item evaluated by React');
-
-  const [mainTitle, setMainTitle] = useState(title);
-
-  const clickHandler = () => {
-    setMainTitle('Updated Title');
-  };
+  const formattedAmount = amount.toFixed(2);
 
   return (
-    <Card className='expense-item'>
-      <ExpenseDate date={date} />
+    <li>
+      <Card className='expense-item'>
+        <ExpenseDate date={date} />
 
-      <div className='expense-item__description'>
-        <h2>{mainTitle}</h2>
-        <div className='expense-item__price'>{amount}</div>
-      </div>
-
-      <button onClick={clickHandler}>Change title</button>
-    </Card>
+        <div className='expense-item__description'>
+          <h2>{title}</h2>
+          <div className='expense-item__price'>{formattedAmount}</div>
+        </div>
+      </Card>
+    </li>
   );
 };
 
