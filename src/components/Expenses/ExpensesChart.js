@@ -44,7 +44,11 @@ const ExpensesChart = props => {
 
   return (
     <Card className='expenses-chart'>
-      <VerticalBarChart data={data} />
+      <VerticalBarChart
+        data={data}
+        height='250px'
+        options={{ maintainAspectRatio: false }}
+      />
     </Card>
   );
 };

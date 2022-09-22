@@ -20,7 +20,7 @@ ChartJS.register(
 );
 
 const VerticalBarChart = props => {
-  return <Bar data={props.data} />;
+  return <Bar {...props} />;
 };
 
 export default VerticalBarChart;
