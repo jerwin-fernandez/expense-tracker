@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './ExpenseForm.css';
 
 const ExpenseForm = props => {
-  const { onSaveExpense } = props;
+  const { onSaveExpense, onCloseForm } = props;
 
   const [userInput, setUserInput] = useState({
     enteredTitle: '',
@@ -27,6 +27,11 @@ const ExpenseForm = props => {
   const submitHandler = e => {
     e.preventDefault();
 
+    if (enteredTitle === '' || enteredAmount === '' || enteredDate === '') {
+      alert('Please enter valid values');
+      return;
+    }
+
     const expenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
@@ -40,6 +45,8 @@ const ExpenseForm = props => {
       enteredAmount: '',
       enteredDate: ''
     });
+
+    onCloseForm();
   };
 
   return (
@@ -78,6 +85,9 @@ const ExpenseForm = props => {
         </div>
       </div>
       <div className='new-expense__actions'>
+        <button type='button' onClick={onCloseForm}>
+          Close
+        </button>
         <button type='submit'>Add</button>
       </div>
     </form>

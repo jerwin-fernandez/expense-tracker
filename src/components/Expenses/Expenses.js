@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import _ from 'underscore';
 import ExpenseFilter from './ExpenseFilter';
 import Card from '../UI/Card';
 import './Expenses.css';
@@ -13,21 +14,35 @@ const Expenses = props => {
     setFilteredYear(year);
   };
 
-  const expenseYears = [
-    ...new Set(expenses.map(expense => expense.date.getFullYear()).sort())
-  ];
+  const expenseYearsMapped = expenses.map(expense => ({
+    id: expense.date.getFullYear().toString(),
+    year: expense.date.getFullYear().toString()
+  }));
+
+  const expenseYears = _.uniq(expenseYearsMapped, i => i.year);
+
+  const expenseYearsSortByYear = _.sortBy(expenseYears, 'year');
+
+  expenseYearsSortByYear.unshift({
+    id: 'x',
+    value: 'default',
+    label: 'All'
+  });
 
   const filteredExpensesByYear = expenses.filter(
     expense => expense.date.getFullYear().toString() === filteredYear
   );
 
-  const filteredExpenses = filteredYear ? filteredExpensesByYear : expenses;
+  const filteredExpenses =
+    filteredYear && filteredYear !== 'default'
+      ? filteredExpensesByYear
+      : expenses;
 
   return (
     <Card className='expenses'>
       <ExpenseFilter
         selected={filteredYear}
-        items={expenseYears}
+        items={expenseYearsSortByYear}
         onChange={changeHandler}
       />
 
